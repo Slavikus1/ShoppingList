@@ -8,7 +8,7 @@ class ShopListRepositoryImpl() : ShopListRepository {
 
     private var autoIncrementId = 0
 
-    override fun getAllItems(): List<ShopItem> {
+    override fun getShopList(): List<ShopItem> {
         return shopList.toList()
     }
 

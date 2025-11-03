@@ -2,7 +2,7 @@ package domain
 
 interface ShopListRepository {
 
-    fun getAllItems(): List<ShopItem>
+    fun getShopList(): List<ShopItem>
 
     fun addShopItem(shopItem: ShopItem)
 
