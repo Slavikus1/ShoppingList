@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoppinglist.R
+import domain.ShopItem
 
 class MainActivity : AppCompatActivity() {
 

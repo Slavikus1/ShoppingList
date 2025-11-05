@@ -3,7 +3,7 @@ package domain
 data class ShopItem(
     val name: String,
     val count: Int,
-    val isDone: Boolean,
+    val isEnabled: Boolean,
     var id: Int = UNDEFINED_ID,
 ) {
     companion object {
