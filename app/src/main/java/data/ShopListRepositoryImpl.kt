@@ -13,7 +13,7 @@ class ShopListRepositoryImpl: ShopListRepository {
 
     init {
         for (i in 1 .. 10) {
-            val item = ShopItem("$i", i,true)
+            val item = ShopItem("item $i", i,true)
             addShopItem(item)
         }
     }
