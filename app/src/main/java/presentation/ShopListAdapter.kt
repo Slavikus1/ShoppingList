@@ -37,11 +37,17 @@ class ShopListAdapter : ListAdapter<ShopItem, ShopListViewHolder>(
         val item = getItem(position)
         holder.tvName?.text = item.name
         holder.tvCount?.text = item.count.toString()
+        
+        // Очищаем предыдущие слушатели перед установкой новых
+        holder.view.setOnLongClickListener(null)
+        holder.view.setOnClickListener(null)
+        
         holder.view.setOnLongClickListener {
             onShopItemLongClickListener?.invoke(item)
             true
         }
         holder.view.setOnClickListener {
+            android.util.Log.d("ShopListAdapter", "View clicked for item: ${item.name}, id: ${item.id}")
             onShopItemClickListener?.invoke(item)
         }
     }

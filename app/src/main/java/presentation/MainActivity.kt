@@ -1,12 +1,16 @@
 package presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import domain.ShopItem
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +24,26 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.shopList.observe(this) {
             shopListAdapter.submitList(it)
+        }
+        val buttonAddItem = findViewById<FloatingActionButton>(R.id.button_add_shop_item)
+        buttonAddItem.setOnClickListener {
+            Log.d("MainActivity", "Button Add clicked")
+            try {
+                val intent = ShopItemActivity.newIntentAddItem(this)
+                Log.d("MainActivity", "Add Intent created: $intent")
+                Log.d("MainActivity", "Intent component: ${intent.component}")
+                Log.d("MainActivity", "Intent extras: ${intent.extras?.keySet()}")
+                if (intent.resolveActivity(packageManager) != null) {
+                    Log.d("MainActivity", "Activity can be resolved")
+                    startActivity(intent)
+                    Log.d("MainActivity", "startActivity called")
+                } else {
+                    Log.e("MainActivity", "Activity cannot be resolved!")
+                }
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Error starting activity", e)
+                e.printStackTrace()
+            }
         }
     }
 
@@ -46,7 +70,20 @@ class MainActivity : AppCompatActivity() {
             viewModel.changeEnableState(it)
         }
         shopListAdapter.onShopItemClickListener = {
-            Log.i("ClickListener", "Click on ${it.name}")
+            Log.d("MainActivity", "Item clicked: ${it.name}, id: ${it.id}")
+            if (it.id != ShopItem.UNDEFINED_ID) {
+                try {
+                    val intent = ShopItemActivity.newIntentEditItem(this, it)
+                    Log.d("MainActivity", "Edit Intent created: $intent")
+                    startActivity(intent)
+                    Log.d("MainActivity", "startActivity called for edit")
+                } catch (e: Exception) {
+                    Log.e("MainActivity", "Error starting edit activity", e)
+                    e.printStackTrace()
+                }
+            } else {
+                Log.e("MainActivity", "Cannot edit item with undefined ID")
+            }
         }
     }
 
